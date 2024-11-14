@@ -1,0 +1,559 @@
+type: vertical-stack
+cards:
+  - type: custom:stack-in-card
+    keep:
+      margin: false
+      box_shadow: false
+      background: false
+    cards:
+      - type: grid
+        square: false
+        columns: 1
+        cards:
+          - type: markdown
+            content: >-
+              <center><font color="#bdbbbb"><font size=4>TIME:&nbsp;<b>  <font
+              color="#41CD52"> {% set total_seconds =
+              states('sensor.battery_total_runtime') | int(0) %} {% set days =
+              (total_seconds // 86400) %} {% set hours = (total_seconds % 86400)
+              // 3600 %} {% set minutes = (total_seconds % 3600) // 60 %} {% set
+              seconds = (total_seconds % 60) %} {{ days }}D{{ hours }}H{{
+              minutes }}M{{ seconds }}S</font></b></font>
+            card_mod:
+              style: |
+                ha-card {
+                   box-shadow: none;
+                   background: #021017;
+                   border: black solid 1px !important;
+                }
+    card_mod:
+      style: |
+        ha-card {
+           box-shadow: none;
+           background: #021017;
+           border: black solid 1px !important;
+        }
+  - type: custom:stack-in-card
+    keep:
+      margin: false
+      box_shadow: false
+      background: false
+    cards:
+      - type: grid
+        square: false
+        columns: 3
+        cards:
+          - type: markdown
+            content: >-
+              <center><font color="#bdbbbb"><font size=3>Charge:&nbsp;<b>{% if
+              states('binary_sensor.charging_status') == 'on' %} <font
+              color=#41CD52>{{ states('binary_sensor.charging_status') | upper
+              }}</font> {% else %} <font color=#fa4b54>{{
+              states('binary_sensor.charging_status') | upper }}</font> {% endif
+              %} 
+            card_mod:
+              style: |
+                ha-card {
+                   box-shadow: none;
+                   background: #021017;
+                   border: black solid 1px !important;
+          - type: markdown
+            content: >-
+              <center><font color="#bdbbbb"><font size=3>Discharge:&nbsp;<b> {%
+              if states('binary_sensor.discharging_status') == 'on' %} <font
+              color=#41CD52>{{ states('binary_sensor.discharging_status') |
+              upper }}</font> {% else %} <font color=#fa4b54>{{
+              states('binary_sensor.discharging_status') | upper }}</font> {%
+              endif %} 
+            card_mod:
+              style: |
+                ha-card {
+                   box-shadow: none;
+                   background: #021017;
+                   border: black solid 1px !important;
+          - type: markdown
+            content: >-
+              <center><font color="#bdbbbb"><font size=3>Balance:&nbsp;<b> {% if
+              states('binary_sensor.balancing_status') == 'on' %} <font
+              color=#41CD52>{{ states('binary_sensor.balancing_status') | upper
+              }}</font> {% else %} <font color=#fa4b54>{{
+              states('binary_sensor.balancing_status') | upper }}</font> {%
+              endif %} 
+            card_mod:
+              style: |
+                ha-card {
+                   box-shadow: none;
+                   background: #021017;
+                   border: black solid 1px !important;
+    card_mod:
+      style: |
+        ha-card {
+           box-shadow: none;
+           background: #021017;
+           border: black solid 1px !important;
+          
+        }
+  - type: horizontal-stack
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: vertical-stack
+                cards:
+                  - type: vertical-stack
+                    cards:
+                      - type: entity
+                        entity: sensor.battery_voltage
+                        name: Total Voltage
+                        icon: mdi:battery
+                        card_mod:
+                          style: |
+                            ha-card {
+                              box-shadow: none;
+                              background: #021017;
+                              border: black solid 1px !important;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center; /* Центрирование содержимого */
+                            }
+                            .info {
+                              color: #41CD52;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;  /* Центрирование текста */
+                            }
+                            .entity__info {
+                              display: flex;
+                              align-items: center;
+                              justify-content: center; /* Центрирование иконки и названия */
+                              gap: 10px; /* Промежуток между иконкой и названием */
+                            }
+                            .state {
+                              color: #41CD52;
+                              text-align: center; /* Центрирование значения */
+                            }
+      - type: vertical-stack
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: entity
+                entity: sensor.battery_current
+                name: Battery Current
+                icon: mdi:current-dc
+                card_mod:
+                  style: |
+                    ha-card {
+                      box-shadow: none;
+                      background: #021017;
+                      border: black solid 1px !important;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center; /* Центрирование содержимого */
+                    }
+                    .info {
+                      color: #41CD52;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;  /* Центрирование текста */
+                    }
+                    .entity__info {
+                      display: flex;
+                      align-items: center;
+                      justify-content: center; /* Центрирование иконки и названия */
+                      gap: 10px; /* Промежуток между иконкой и названием */
+                    }
+                    .state {
+                      color: #41CD52;
+                      text-align: center; /* Центрирование значения */
+                    }
+  - type: horizontal-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: entities
+            card_mod:
+              style: |
+                ha-card {
+                  background-color: #021017 !important;
+                  color: #41CD52;
+                  box-shadow: none;
+                  border: black solid 1px !important;
+                }
+            entities:
+              - entity: sensor.battery_power
+                name: Power
+                card_mod:
+                  style:
+                    hui-generic-entity-row:
+                      $: |
+                        state-badge {
+                          display: none;
+                        }
+                        .info {
+                          margin-left: 0 !important;
+                          color: #bdbbbb;
+                        }
+              - entity: sensor.battery_capacity
+                name: Capacity
+                card_mod:
+                  style:
+                    hui-generic-entity-row:
+                      $: |
+                        state-badge {
+                          display: none;
+                        }
+                        .info {
+                          margin-left: 0 !important;
+                          color: #bdbbbb;
+                        }
+              - entity: sensor.average_cell_voltage
+                name: Ave. Cell Volt
+                card_mod:
+                  style:
+                    hui-generic-entity-row:
+                      $: |
+                        state-badge {
+                          display: none;
+                        }
+                        .info {
+                          margin-left: 0 !important;
+                          color: #bdbbbb;
+                        }
+              - entity: sensor.cell_voltage_difference
+                name: Cell Volt Diff.
+                card_mod:
+                  style:
+                    hui-generic-entity-row:
+                      $: |
+                        state-badge {
+                          display: none;
+                        }
+                        .info {
+                          margin-left: 0 !important;
+                          color: #bdbbbb;
+                        }
+              - entity: sensor.balancing_current
+                name: Balance Current
+                card_mod:
+                  style:
+                    hui-generic-entity-row:
+                      $: |
+                        state-badge {
+                          display: none;
+                        }
+                        .info {
+                          margin-left: 0 !important;
+                          color: #bdbbbb;
+                        }
+              - entity: sensor.temperature_sensor_1
+                name: Battery T1
+                card_mod:
+                  style:
+                    hui-generic-entity-row:
+                      $: |
+                        state-badge {
+                          display: none;
+                        }
+                        .info {
+                          margin-left: 0 !important;
+                          color: #bdbbbb;
+                        }
+              - entity: sensor.temperature_sensor_2
+                name: Battery T2
+                card_mod:
+                  style:
+                    hui-generic-entity-row:
+                      $: |
+                        state-badge {
+                          display: none;
+                        }
+                        .info {
+                          margin-left: 0 !important;
+                          color: #bdbbbb;
+                        }
+      - type: entities
+        card_mod:
+          style: |
+            ha-card {
+              background-color: #021017 !important;
+              color: #41CD52;
+              box-shadow: none;
+              border: black solid 1px !important;
+            }
+        entities:
+          - entity: sensor.state_of_charge_soc
+            name: Remaining %
+            card_mod:
+              style:
+                hui-generic-entity-row:
+                  $: |
+                    state-badge {
+                      display: none;
+                    }
+                    .info {
+                      margin-left: 0 !important;
+                      color: #bdbbbb;
+                    }
+          - entity: sensor.battery_remaining_capacity
+            name: Remaining Capacity
+            card_mod:
+              style:
+                hui-generic-entity-row:
+                  $: |
+                    state-badge {
+                      display: none;
+                    }
+                    .info {
+                      margin-left: 0 !important;
+                      color: #bdbbbb;
+                    }
+          - entity: sensor.charging_cycles
+            name: Cycle Count
+            card_mod:
+              style:
+                hui-generic-entity-row:
+                  $: |
+                    state-badge {
+                      display: none;
+                    }
+                    .info {
+                      margin-left: 0 !important;
+                      color: #bdbbbb;
+                    }
+          - entity: sensor.total_charging_cycle_capacity
+            name: Cycle Capacity
+            card_mod:
+              style:
+                hui-generic-entity-row:
+                  $: |
+                    state-badge {
+                      display: none;
+                    }
+                    .info {
+                      margin-left: 0 !important;
+                      color: #bdbbbb;
+                    }
+          - entity: sensor.power_tube_temperature
+            name: MOS Temp
+            card_mod:
+              style:
+                hui-generic-entity-row:
+                  $: |
+                    state-badge {
+                      display: none;
+                    }
+                    .info {
+                      margin-left: 0 !important;
+                      color: #bdbbbb;
+                    }
+          - entity: sensor.battery_temperature_t4
+            name: Battery T4
+            card_mod:
+              style:
+                hui-generic-entity-row:
+                  $: |
+                    state-badge {
+                      display: none;
+                    }
+                    .info {
+                      margin-left: 0 !important;
+                      color: #bdbbbb;
+                    }
+          - entity: sensor.battery_temperature_t5
+            name: Battery T5
+            card_mod:
+              style:
+                hui-generic-entity-row:
+                  $: |
+                    state-badge {
+                      display: none;
+                    }
+                    .info {
+                      margin-left: 0 !important;
+                      color: #bdbbbb;
+                    }
+
+                          
+  - type: custom:stack-in-card
+    keep:
+      margin: false
+      box_shadow: false
+      background: true
+    card_mod:
+      style: |
+        ha-card {
+          box-shadow: none;
+          background: #021017;
+          border: black solid 1px !important;
+        }
+        .card-content {
+          padding: 8px; /* Уменьшены отступы карточки */
+        }
+    cards:
+      - type: markdown
+        content: |
+          <center>
+            <font color="#91c8f2" size=2><b>Cells Voltage</b></font>
+          </center>
+          <center> 
+          <table style="width:100%;">
+          <tr>      
+            <td style="text-align:left">
+              <center><font color="#91c8f2"><font size=2>01.&nbsp;</font> {% if
+              states('sensor.cell_voltage_max_cell_number') == '1' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_01') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '1' %} 
+              <font color="#fa4b54">{{ states('sensor.cell_voltage_01') }}
+              V</font> {% else %} <font color="#41CD52">{{
+              states('sensor.cell_voltage_01') }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+              <font color="#91c8f2"><font size=2>02.&nbsp;</font> {% if
+              states('sensor.cell_voltage_max_cell_number') == '2' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_02') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '2' %} <font
+              color="#fa4b54">{{ states('sensor.cell_voltage_02') }} V</font> {%
+              else %} <font color="#41CD52">{{ states('sensor.cell_voltage_02')
+              }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br> <font color="#91c8f2"><font size=2>03.&nbsp;</font> {%
+              if states('sensor.cell_voltage_max_cell_number') == '3' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_03') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '3' %} <font
+              color="#fa4b54">{{ states('sensor.cell_voltage_03') }} V</font> {%
+              else %} <font color="#41CD52">{{ states('sensor.cell_voltage_03')
+              }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br> <font color="#91c8f2"><font size=2>04.&nbsp;</font> {%
+              if states('sensor.cell_voltage_max_cell_number') == '4' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_04') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '4' %} <font
+              color="#fa4b54">{{ states('sensor.cell_voltage_04') }} V</font> {%
+              else %} <font color="#41CD52">{{ states('sensor.cell_voltage_04')
+              }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br> <font color="#91c8f2"><font size=2>05.&nbsp;</font> {%
+              if states('sensor.cell_voltage_max_cell_number') == '5' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_05') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '5' %} <font
+              color="#fa4b54">{{ states('sensor.cell_voltage_05') }} V</font> {%
+              else %} <font color="#41CD52">{{ states('sensor.cell_voltage_05')
+              }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br> <font color="#91c8f2"><font size=2>06.&nbsp;</font> {%
+              if states('sensor.cell_voltage_max_cell_number') == '6' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_06') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '6' %} <font
+              color="#fa4b54">{{ states('sensor.cell_voltage_06') }} V</font> {%
+              else %} <font color="#41CD52">{{ states('sensor.cell_voltage_06')
+              }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></center>
+            </td>
+           
+            <td style="text-align:center">
+              <center><font color="#91c8f2"><font size=2>07.&nbsp;</font> {% if
+              states('sensor.cell_voltage_max_cell_number') == '7' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_07') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '7' %} <font
+              color="#fa4b54">{{ states('sensor.cell_voltage_07') }} V</font> {%
+              else %} <font color="#41CD52">{{ states('sensor.cell_voltage_07')
+              }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br> <font color="#91c8f2"><font size=2>08.&nbsp;</font> {%
+              if states('sensor.cell_voltage_max_cell_number') == '8' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_08') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '8' %} <font
+              color="#fa4b54">{{ states('sensor.cell_voltage_08') }} V</font> {%
+              else %} <font color="#41CD52">{{ states('sensor.cell_voltage_08')
+              }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br> <font color="#91c8f2"><font size=2>09.&nbsp;</font> {%
+              if states('sensor.cell_voltage_max_cell_number') == '9' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_09') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '9' %} <font
+              color="#fa4b54">{{ states('sensor.cell_voltage_09') }} V</font> {%
+              else %} <font color="#41CD52">{{ states('sensor.cell_voltage_09')
+              }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br> <font color="#91c8f2"><font size=2>10.&nbsp;</font> {%
+              if states('sensor.cell_voltage_max_cell_number') == '10' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_10') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '10' %}
+              <font color="#fa4b54">{{ states('sensor.cell_voltage_10') }}
+              V</font> {% else %} <font color="#41CD52">{{
+              states('sensor.cell_voltage_10') }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+              <font color="#91c8f2"><font size=2>11.&nbsp;</font> {% if
+              states('sensor.cell_voltage_max_cell_number') == '11' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_11') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '11' %}
+              <font color="#fa4b54">{{ states('sensor.cell_voltage_11') }}
+              V</font> {% else %} <font color="#41CD52">{{
+              states('sensor.cell_voltage_11') }} V</font> {% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+              <font color="#91c8f2"><font size=2>12.&nbsp;</font> {% if
+              states('sensor.cell_voltage_max_cell_number') == '12' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_12') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '12' %}
+              <font color="#fa4b54">{{ states('sensor.cell_voltage_12') }}
+              V</font> {% else %} <font color="#41CD52">{{
+              states('sensor.cell_voltage_12') }} V</font> {% endif %}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></center>
+            </td>
+              
+            <td style="text-align:right">
+              <center><font color="#91c8f2"><font size=2>13.&nbsp;</font> {% if
+              states('sensor.cell_voltage_max_cell_number') == '13' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_13') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '13' %}
+              <font color="#fa4b54">{{ states('sensor.cell_voltage_13') }}
+              V</font> {% else %} <font color="#41CD52">{{
+              states('sensor.cell_voltage_13') }} V</font> {% endif %} <br>
+              <font color="#91c8f2"><font size=2>14.&nbsp;</font> {% if
+              states('sensor.cell_voltage_max_cell_number') == '14' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_14') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '14' %}
+              <font color="#fa4b54">{{ states('sensor.cell_voltage_14') }}
+              V</font> {% else %} <font color="#41CD52">{{
+              states('sensor.cell_voltage_14') }} V</font> {% endif %} <br>
+              <font color="#91c8f2"><font size=2>15.&nbsp;</font> {% if
+              states('sensor.cell_voltage_max_cell_number') == '15' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_15') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '15' %}
+              <font color="#fa4b54">{{ states('sensor.cell_voltage_15') }}
+              V</font> {% else %} <font color="#41CD52">{{
+              states('sensor.cell_voltage_15') }} V</font> {% endif %} <br>
+              <font color="#91c8f2"><font size=2>16.&nbsp;</font> {% if
+              states('sensor.cell_voltage_max_cell_number') == '16' %}  <font
+              color="#3090C7">{{ states('sensor.cell_voltage_16') }} V</font> {%
+              elif states('sensor.cell_voltage_min_cell_number') == '16' %}
+              <font color="#fa4b54">{{ states('sensor.cell_voltage_16') }}
+              V</font> {% else %} <font color="#41CD52">{{
+              states('sensor.cell_voltage_16') }} V</font> {% endif %} <br>
+              <font color="#333232">
+              <br><br></center>
+            </td>
+          </tr>
+          </table> 
+          </center>
+          <br> <!-- Пустая строка -->
+
+          <center>
+            <font color="#91c8f2" size=2><b>Cells Wire Resistance</b></font>
+          </center>
+          <center> 
+          <table style="width:100%;">
+            <tr>
+              <td style="text-align:left">
+                <font color="#91c8f2"><font size=2>01.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_01') }} Ω</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                <font color="#91c8f2"><font size=2>02.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_02') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>03.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_03') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>04.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_04') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>05.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_05') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>06.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_06') }} Ω</font><br>
+              </td>
+              <td style="text-align:center;">
+                <font color="#91c8f2"><font size=2>07.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_07') }} Ω</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                <font color="#91c8f2"><font size=2>08.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_08') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>09.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_09') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>10.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_10') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>11.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_11') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>12.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_12') }} Ω</font><br>
+              </td>
+              <td style="text-align:right;">
+                <font color="#91c8f2"><font size=2>13.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_13') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>14.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_14') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>15.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_15') }} Ω</font><br>
+                <font color="#91c8f2"><font size=2>16.&nbsp;&nbsp;</font><font color="#41CD52">{{ states('sensor.cell_resistance_16') }} Ω</font><br><br><br>
+               
+            </tr>
+          </table> 
+          </center>
+        card_mod:
+          style: |
+            ha-card {
+            box-shadow: none;
+            background: #021017;
+            border: black solid 1px !important;
